@@ -51,6 +51,7 @@ nav {
     padding: 12px;
     font-family: var(--fonte-padrao);
     font-weight: bold;
+    text-align: center;
 }
 
 nav > a {
@@ -71,14 +72,22 @@ nav a:hover {
 }
 
 main {
-    background-color: white;
     font-family: var(--fonte-padrao);
     padding: 20px;
+    background-color: white;
+    min-width: 300px;
+    max-width: 800px;
+    margin: auto;
+    border-radius: 10px;
 }
 
 main h2 {
     font-family: var(--fonte-android);
     color:var(--cor4);
+}
+
+main > img {
+    width: 800px;
 }
 
 section {
@@ -107,4 +116,8 @@ footer {
     color: white;
     text-align: center;
     font-weight: bold;
+}
+
+iframe {
+    width: 100%;
 }
