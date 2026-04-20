@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<style>
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+    }
+  table {
+    border-collapse: collapse;
+  }
+  
+  header {
+    text-align: center;
+  }
+  td {
+    border: 2px solid #999;
+    width: 50px;
+    height: 40px;
+    text-align: center;
+    vertical-align: middle;
+    font-weight: bold;
+  }
+</style>
+</head>
+<body>
+    <header>
+        <h1>Mesclagem de Células</h1>
+        <p>Mesclagem de células em HTML é quando você junta duas ou mais células de uma tabela em uma só. Isso é muito usado para organizar melhor o layout ou destacar informações.</p>
+        <hr>
+    </header>
+<table>
+  <!-- Linha 1 -->
+  <tr>
+    <td>1</td>
+    <td>2</td>
+    <td rowspan="2" colspan="2">3</td>
+    <td>4</td>
+  </tr>
+
+  <!-- Linha 2 -->
+  <tr>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+  </tr>
+
+  <!-- Linha 3 -->
+  <tr>
+    <td colspan="4">8</td>
+    <td>9</td>
+  </tr>
+
+  <!-- Linha 4 -->
+  <tr>
+    <td rowspan="2">10</td>
+    <td colspan="2">11</td>
+    <td colspan="2">12</td>
+  </tr>
+
+  <!-- Linha 5 -->
+  <tr>
+    <td>13</td>
+    <td>14</td>
+    <td colspan="2">15</td>
+  </tr>
+</table>
+
+</body>
+</html>
