@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../imagens/favicon-html.png" type="image/x-icon">
+    <title>testes.com</title>
+    <style>
+        body {
+            background-color: rgb(214, 246, 214);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>JavaScript</h1>
+    </header>
+    <main>
+        <a href="#" onclick="clicou()">Clique Aqui</a>
+        <div id="saida"></div>
+
+        <script>
+            function clicou() {
+                s = window.document.getElementById("saida")
+                s.innerHTML += "<p>Você Clicou!</p>"
+            }
+        </script>
+    </main>
+</body>
+</html>
