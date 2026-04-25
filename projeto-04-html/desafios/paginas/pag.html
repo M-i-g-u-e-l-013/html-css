@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../imagens/favicon-html.png" type="image/x-icon">
+    <title>pagina.com</title>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+        body {
+            background-color: white;
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: rgb(203, 243, 203);
+        }
+
+        header {
+            background-color: white;
+            padding: 15px;
+            border: 2px solid black;
+        }
+
+        header > h1 {
+            text-align: center;
+            color: black;
+            padding: 10px;
+        }
+
+        nav {
+            background-color: black;
+            text-align: center;
+            padding: 10px;
+        }
+
+        nav > a {
+            color: white;
+            font-weight: bold;
+            margin: 5px;
+            text-decoration: none;
+        }
+
+        a:hover {
+            background-color: darkgray;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        main {
+            padding: 15px;
+            background-color: white;
+            margin: 15px;
+        }
+
+        main > p {
+            padding: 10px;
+        }
+
+        .table-container {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    table {
+        border-collapse: collapse;
+        min-width: 600px;
+        width: 100%;
+    }
+
+    th, td {
+        border: 1px solid #ccc;
+        padding: 10px;
+        text-align: center;
+    }
+
+    th {
+        background-color: #333;
+        color: white;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Página de Testes</h1>
+    </header>
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">Curiosidades</a>
+        <a href="#">Fale Conosco</a>
+        <a href="#">Termos de uso</a>
+    </nav>
+    <main>
+        <h2>O que é HTML ?</h2>
+        <p>TML, que significa HyperText Markup Language (Linguagem de Marcação de Hipertexto), é a linguagem base utilizada para estruturar e organizar o conteúdo de sites na internet, definindo elementos como textos, imagens, vídeos e links.</p>
+        <h2>O que é CSS ?</h2>
+        <p>CSS (Cascading Style Sheets, ou Folhas de Estilo em Cascata) é uma linguagem de estilo utilizada para definir a aparência e o layout de páginas web. Ela separa o design (cores, fontes, espaçamento) do conteúdo estrutural (HTML), permitindo criar sites responsivos e visualmente atraentes de forma eficiente e organizada. </p>
+    </main>
+    <section><div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Idade</th>
+                <th>Cidade</th>
+                <th>Profissão</th>
+                <th>Salário</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Ana</td>
+                <td>25</td>
+                <td>São Paulo</td>
+                <td>Designer</td>
+                <td>R$ 4000</td>
+            </tr>
+            <tr>
+                <td>João</td>
+                <td>30</td>
+                <td>Rio</td>
+                <td>Dev</td>
+                <td>R$ 7000</td>
+            </tr>
+            <tr>
+                <td>Maria</td>
+                <td>29</td>
+                <td>Minas Gerais</td>
+                <td>Contadora</td>
+                <td>R$ 3000</td>
+            </tr>
+            <tr>
+                <td>Lucas</td>
+                <td>19</td>
+                <td>São Paulo</td>
+                <td>Programador</td>
+                <td>R$ 10000</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</section>
+</body>
+</html>

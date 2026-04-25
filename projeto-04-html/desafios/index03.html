@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../imagens/favicon-html.png" type="image/x-icon">
+    <title>Exercicío 24 / C</title>
+    <style>
+
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+        
+        header {
+            background-color: #1a5c37;
+            padding: 25px;
+            color: white;
+        }
+
+        header > h1 {
+            color: white;
+            text-align: center;
+            font-size: 1.6em;
+        }
+
+        header > p {
+            margin-top: 14px;
+            text-align: center;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: rgb(208, 243, 208);
+        }
+
+        iframe {
+            width: 100%;
+            height: 400px;
+            display: block;
+            border: 2px solid black;
+        }
+
+        nav {
+            background-color: #063d1e;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav > a {
+            color: white;
+            font-weight: bold;
+            margin: 4px;
+            text-decoration: none;
+        }
+
+        nav > a:hover {
+            background-color: #3ddc84;
+            padding: 11px;
+            border-radius: 10px;
+        }
+
+        main {
+            padding: 10px;
+            margin: 20px;
+            background-color: white;
+            list-style-type: "\2714\00A0\00A0";
+            list-style-position: inside; 
+            border: 1px solid black; 
+        }
+
+        main > p {
+            padding: 10px;
+        }
+
+        main li > a {
+            color: blue;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        main > h2 {
+            margin: 10px;
+        }
+
+        main li > a:hover {
+            text-decoration: underline;
+        }
+
+        main li > a:active {
+            color: red;
+        }
+
+        footer {
+            background-color: #063d1e;
+            padding: 10px;
+        }
+
+        footer > p {
+            color: white;
+            text-align: center;
+        }
+
+        footer p > a {
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        footer p > a:hover {
+            text-decoration: underline;
+        }
+
+</style>
+</head>
+<body>
+    <header>
+        <h1>Navegação no iframe em HTML</h1>
+        <p>A navegação em iframe HTML permite carregar conteúdos externos, como páginas web.</p>
+    </header>
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">Curiosidades</a>
+        <a href="#">Termos de uso</a>
+        <a href="#">Fale Conosco</a>
+    </nav>
+    <main>
+        <h2>Navegação no iframe</h2>
+        <p>A navegação em iframe HTML permite carregar conteúdos externos, como páginas web, vídeos ou documentos, dentro de um quadro em uma página principal. Utiliza-se a tag com atributos src (fonte), name (identificador) e target nos links para direcionar o carregamento. É ideal para sites modulares e incorporação de conteúdo.</p>
+        <ul>
+            <li><a href= "../desafios/paginas/pag.html" target="frame"><abbr title="Prosseguir para a primeira página">Primeira Página</abbr></a></li>
+            <li><a href="../desafios/paginas/pag02.html" target="frame"><abbr title="Prosseguir para a segunda página">Segunda Página</abbr></a></li>
+            <li><a href="../desafios/paginas/pag03.html" target="frame"><abbr title="Prosseguir para a terceira página">Terceira Página</abbr></a></li>
+        </ul>
+        <p>O elemento HTML (ou elemento HTML inline frame) representa um contexto de navegação aninhado, efetivamente incorporando outra página HTML para a página atual. Em HTML 4.01, um documento pode conter uma cabeça e um corpo ou uma cabeça e um conjunto de quadros, mas não tanto um corpo e um conjunto de quadros.</p>
+        <iframe src="https://gustavoguanabara.github.io/" name= "frame" frameborder="0">
+        </iframe>
+        <h2>Como usar o iframe ?</h2>
+        <p>No entanto, pode ser usado dentro de um corpo de documento normal. Cada contexto de navegação tem sua própria história de sessão e o documento ativo. O contexto de navegação que contém o conteúdo incorporado é chamado o pai de contexto de navegação.</p>
+        <p>O iframe HTML é um elemento utilizado para inserir conteúdos externos em uma página, como vídeos do YouTube, documentos e muito mais. Sua utilização deve ser feita com moderação e com os devidos cuidados com a segurança para evitar que códigos maliciosos sejam executados.</p>
+    </main>
+    <footer>
+        <p>Site criado para estudos em <a href="https://pt.wikipedia.org/wiki/HTML" target="_blank"><abbr title="HTML (HyperText Markup Language) ">HTML</abbr></a> e <a href="https://pt.wikipedia.org/wiki/CSS" target="_blank"><abbr title= "CSS (Cascading Style Sheets)">CSS</abbr></a></p>
+    </footer>
+</body>
+</html>
