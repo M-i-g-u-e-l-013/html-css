@@ -1,15 +1,114 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<HTML lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="../imagens/Tec.png" type="image/x-icon">
     <title>Exercicío 25 / C</title>
+    <style>
+        :root {
+    --cor0: #c5ebd6;
+    --cor1: #83ea1d;
+    --cor2: #3ddc84;
+    --cor3: #2fa866;
+    --cor4: #1a5c37;
+    --cor5: #063d1e;
+
+    --fonte-padrao: Arial, Verdana, Helvetica, sans-serif;
+    --fonte-destaque: "Dancing Script", cursive;
+    --fonte-android: "Android", cursive;
+}
+
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        body {
+            background-color: rgb(180, 237, 180);
+        }
+
+        header {
+            background-color: rgb(26, 84, 26);
+            padding: 20px;
+        }
+
+        header > h1 {
+            color: white;
+            text-align: center;
+            font-family: var(--fonte-android);
+        }
+
+        header > p {
+            color: white;
+            text-align: center;
+            margin-top: 10px;
+            font-family: var(--fonte-destaque);
+        }
+
+        nav {
+            background-color: var(--cor5);
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav > a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 3px;
+        }
+
+        nav > a:hover {
+            background-color: var(--cor2);
+            padding: 8px;
+            border-radius: 10px;
+            transition: 0.5s;
+        }
+
+        main {
+            background-color: white;
+            padding-bottom: 500px;
+            margin: 10px;
+            border: 1px solid black;
+        }
+
+        main form > p {
+            font-weight: bold;
+            margin: 14px;
+            font-family: var(--fonte-destaque);
+            padding: 3px;
+        }
+
+        footer {
+            background-color: var(--cor5);
+            padding: 8px;
+        }
+
+        footer > p {
+            color: white;
+            text-align: center;
+            font-family: var(--fonte-destaque);
+        }
+
+        footer p abbr > a {
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
     <header>
         <h1>Testes em Formulários</h1>
+        <p>Um formulário <span style="color: yellow;">HTML</span> é criado com a tag form, que serve como contêiner para campos de <span style="color: yellow;">entrada.</span></p>
     </header>
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">Curiosidades</a>
+        <a href="#">Termos de Uso</a>
+        <a href="#">Fale Conosco</a>
+    </nav>
     <main>
         <form action="cadastros.py" method="post" autocomplete="off">
             <p>
@@ -42,5 +141,8 @@
             </p>
         </form>
     </main>
+    <footer>
+        <p>Site criado para estudos em <abbr title="HyperText Markup"><a href="https://pt.wikipedia.org/wiki/HTML" target="_blank">HTML</a></abbr> e <abbr title="Cascading Style Sheets"><a href="https://pt.wikipedia.org/wiki/CSS" target="_blank">CSS</a></abbr></p>
+    </footer>
 </body>
 </html>
