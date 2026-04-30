@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../imagens/Tec.png" type="image/x-icon">
+    <title>Exercicío 25 / G</title>
+</head>
+<body>
+    <header>
+        <h1>Exemplo de Formulário</h1>
+    </header>
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">Curiosidades</a>
+        <a href="#">Contato</a>
+    </nav>
+    <main>
+        <form action="cadastros.py" method="post" autocomplete="on">
+            <p>
+                <label for="iest">Estado</label>
+                <select name="estado" id="iest" required>
+                    <optgroup label="Região Nordeste">
+                        <option value="PE">Pernambuco</option>
+                        <option value="RN">Rio Grande do Norte</option>
+                        <option value="BH">Bahia</option>
+                    </optgroup>
+
+                    <optgroup label="Região Sudeste">
+                        <option value="MG">Minas Gerais</option>
+                        <option value="SP" selected>São Paulo</option>
+                        <option value="RJ">Rio de Janeiro</option>
+                    </optgroup>
+                </select>
+            </p>
+
+            <p>
+                <label for="iprof">Profissão: </label>
+                <input type="text" name="profissão" id="iprof" list="lstlist">
+                <datalist id="lstlist">
+                    <option value="DEV">Desenvolvedor</option>
+                    <option value="PROF">Professor</option>
+                    <option value="ADM">Administrador</option>
+                </datalist>
+            </p>
+
+            <p>
+                <label for="imsg">Mensagem: <label> <br>
+                    <textarea name="msg" id="imsg" cols="30" rows="10" placeholder="Digite sua mensagem:"></textarea>
+            </p>
+
+            <p>
+                <input type="submit" value="Cadastrar">
+                <input type="reset" value="Excluir">
+            </p>
+        </form>
+    </main>
+</body>
+</html>

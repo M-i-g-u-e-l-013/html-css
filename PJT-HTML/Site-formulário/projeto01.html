@@ -94,12 +94,21 @@
             
         }
 
-        select, textarea{
+        textarea{
             width: 95%;
-            padding:10px;
+            padding: 10px;
             border-radius: 8px;
             border: 1px solid black;
             margin-top:5px;
+            font-weight: bold;
+        }
+
+        select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 10px;
+            border: 1px solid black;
+            margin-top: 5px;
             font-weight: bold;
         }
 
@@ -123,11 +132,19 @@
             padding: 4px;
         }
 
+        input[type="submit"]:hover {
+            background-color: rgb(3, 97, 3);
+        }
+
         input[type="reset"] {
             background-color: red;
             font-weight: bold;
             border-radius: 10px;
             padding: 7px;
+        }
+
+        input[type="reset"]:hover {
+            background-color: rgb(169, 5, 5);
         }
 
         footer {
@@ -157,13 +174,13 @@
                 <legend>Dados Pessoais</legend>
 
                 <div>
-                    <label for="Inome"><b>Nome:</b></label>
-                    <input type="text" name="nome" id="inome" placeholder="Nome Cadastrado:">
+                    <label for="inome"><b>Nome:</b></label>
+                    <input type="text" name="nome" id="inome" required placeholder="Nome Cadastrado:">
                 </div>
 
                 <div>
                     <label for="isobrenome"><b>Sobrenome:</b></label>
-                    <input type="text" name="sobrenome" id="isobrenome" placeholder="Sobrenome Cadastrado:">
+                    <input type="text" name="sobrenome" id="isobrenome" required placeholder="Sobrenome Cadastrado:">
                 </div>
 
                 <div>
@@ -225,6 +242,22 @@
 
             <fieldset>
                 
+                <legend>Profissão</legend>
+
+                <div>
+                    <label for="iprof"><b>Profissão:</b> </label>
+                    <input type="text" name="profissão" id="iprof" list="lstlista" required>
+                    <datalist id="lstlista">
+                        <option value="DEV">Desenvolvedor</option>
+                        <option value="ADM">Administrador</option>
+                        <option value="CONT">Contador</option>
+                        <option value="PF">Policial</option>
+                    </datalist>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                
                 <legend>Interesses favoritos</legend>
 
                 <div>
@@ -262,7 +295,7 @@
 
                 <div>
                     <label for="ifale"><b>Sobre Você:</b></label>
-                    <textarea id="msg" name="msg" rows="4" placeholder="Escreva algo sobre você..."></textarea>
+                    <textarea id="msg" name="msg" rows="4" placeholder="Escreva algo sobre você..."></textarea required>
                 </div>
             </fieldset>
 
@@ -281,7 +314,7 @@
                 <legend>Foto de Cadastro</legend>
 
                 <div>
-                    <input type="file" name="foto" id="ifoto">
+                    <input type="file" name="foto" id="ifoto" required>
                 </div>
 
             </fieldset>
