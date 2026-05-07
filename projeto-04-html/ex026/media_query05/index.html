@@ -7,8 +7,9 @@
     <link rel="stylesheet" href="estilos/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
     <title>media.com</title>
+    <link rel="stylesheet" href="estilos/media.css">
 </head>
-<body>
+<body onresize="MudouTamanho()">
     <header>
         <h1>Tecnologia e Inovação</h1>
         <p>Tecnologia e inovação são pilares essenciais para o desenvolvimento social e a competitividade empresarial</p>
@@ -33,6 +34,16 @@
         <p>© 2026 - Site Criado Para Estudos</p>
     </footer>
     <script>
+
+        function MudouTamanho() {
+            if (window.innerWidth >= 768) {
+                itens.style.display = "block"
+            } else {
+                itens.style.display = "none"
+            }
+        }
+
+
         function clickmenu() {
             if (itens.style.display == "block") {
                 itens.style.display = "none"
