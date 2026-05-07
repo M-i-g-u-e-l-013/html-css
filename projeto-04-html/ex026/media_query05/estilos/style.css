@@ -1,0 +1,100 @@
+* {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: rgb(183, 239, 183);
+        }
+
+        header {
+            background-color: rgb(9, 134, 9);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        menu {
+            display: none;
+        }
+
+        #be {
+            background-color: rgb(7, 68, 7);
+            color: white;
+            border-radius: 10px;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        #be:hover {
+            background-color: white;
+            color: black;
+        }
+
+        header > p {
+            margin-top: 10px;
+        }
+
+        nav {
+            background-color: rgb(3, 117, 3);
+            padding: 13px;
+            text-align: center;
+        }
+
+        nav > a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 9px;
+            display: none;
+        }
+
+        nav > a:hover {
+            background-color: rgb(17, 175, 17);
+            padding: 12px;
+            display: block;
+            border-radius: 10px;
+        }
+
+        main {
+            border-style: solid;
+            border-color: green;
+            background-color: white;
+            padding-bottom: 45px;
+            max-width: 900px;
+            margin: 30px auto;
+            border-radius: 15px;
+        }
+
+        main > img {
+            width: 100%;
+            max-width: 800px;
+            display: block;
+            margin: 20px auto;
+            border-style: solid;
+            border-color: black;
+            border-radius: 30px;
+        }
+
+        main > h2 {
+            color: green;
+            padding-top: 10px;
+            padding-left: 10px;
+            font-size: 1.6em;
+        }
+
+        main > p {
+            padding-top: 10px;
+            padding-left: 14px;
+            line-height: 1.5em;
+            font-weight: bold;
+        }
+
+        footer {
+            background-color: green;
+            color: white;
+            padding: 14px;
+            text-align: center;
+            font-weight: bold;
+        }
