@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../imagens/Tec.png" type="image/x-icon">
+    <link rel="stylesheet" href="estilos/style.css">
+    <link rel="stylesheet" href="estilos/media.css">
+    <title>testes.com</title>
+</head>
+<body>
+    <header>
+        <h1>Formulários Modernos</h1>
+        <p>Preencha seus dados abaixo para se cadastrar</p>
+    </header>
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">Curiosidades</a>
+        <a href="#">Contato</a>
+        <a href="#">Termos de uso</a>
+    </nav>
+    <main>
+        <form action="cadastro.php" method="post" autocomplete="on">
+            <fieldset>
+                <legend>Dados Pessoais</legend>
+
+                <div>
+                    <label for="Inome"><b>Nome:</b></label>
+                    <input type="text" name="nome" id="inome" placeholder="Nome Cadastrado:">
+                </div>
+
+                <div>
+                    <label for="isobrenome"><b>Sobrenome:</b></label>
+                    <input type="text" name="sobrenome" id="isobrenome" placeholder="Sobrenome Cadastrado:">
+                </div>
+
+                <div>
+                    <label for="Iidade"><b>Idade:</b></label>
+                    <input type="number" name="idade" id="Iidade" required placeholder="Digite sua idade:" min="18" max="65">
+                </div>
+
+                <div>
+                    <label for="iemail"><b>E-mail:</b></label>
+                    <input type="email" name="email" id="iemail" required placeholder="E-mail de Login:">
+                </div>
+
+                <div>
+                    <label for="isenha"><b>Senha:</b></label>
+                    <input type="password" name="senha" id="isenha" required placeholder="Senha de Login:">
+                </div>
+            </fieldset>
+
+            <fieldset>
+                
+                <legend>Informações Extras</legend>
+
+                <div>
+                    <label for="idata"><b>Data de nascimento:</b></label>
+                    <input type="date" name="data" id="idata" required>
+                </div>
+
+                <div>
+                    <label for="itel"><b>Telefone:</b></label>
+                    <input type="tel" name="telefone" id="itel" required placeholder="(00) 00000-0000">
+                </div>
+
+                <div>
+                    <label for="ipais"><b>Pais:</b></label>
+                    <select name="pais" id="pais" required>
+                    <option value="">Selecione seu país</option>
+                    <option value="brasil">Brasil</option>
+                    <option value="portugal">Portugal</option>
+                    <option value="angola">Angola</option>
+                    <option value="moçambique">Moçambique</option>
+                    </select>
+                </div>
+            </fieldset>
+
+            <fieldset>
+
+                <legend>Sexo</legend>
+
+                <div>
+                    <label for="sxmasculino"><b>Masculino</b></label>
+                    <input type="radio" name="sexo" id="sxmasculino" required>
+                </div>
+
+                <div>
+                    <label for="sxfeminino"><b>Feminino</b></label>
+                    <input type="radio" name="sexo" id="sxfeminino" required>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                
+                <legend>Interesses favoritos</legend>
+
+                <div>
+                    <input type="checkbox" name="esportes" id="ileitura" value="leitura"> <label for="ileitura"><b>Leitura</b></label>
+                </div>
+
+                <div>
+                    <input type="checkbox" name="esportes" id="ijogos" value="Jogos Eletronicos"> <label for="ijogos"><b>Jogos Eletronicos</b></label>
+                </div>
+
+                <div>
+                    <input type="checkbox" name="esportes" id="imusculação" value="Musculação"> <label for="imusculação"><b>Musculação</b></label>
+                </div>
+
+                <div>
+                    <input type="checkbox" name="esportes" id="iprogramação" value="Programação"> <label for="iprogramação"><b>Programação</b></label>
+                </div>
+
+                <div>
+                    <input type="checkbox" name="esportes" id="icinema" value="Cinema e Séries"> <label for="icinema"><b>Cinema e Séries</b></label>
+                </div>
+
+                <div>
+                    <input type="checkbox" name="esportes" id="iculi" value="Culinária"> <label for="iculi"><b>Culinária</b></label>
+                </div>
+
+                <div>
+                    <input type="checkbox" name="esportes" id="imoda" value="Moda e Estilo"> <label for="imoda"><b>Moda e Estilo</b></label>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                
+                <legend>Mensagem</legend>
+
+                <div>
+                    <label for="ifale"><b>Sobre Você:</b></label>
+                    <textarea id="msg" name="msg" rows="4" placeholder="Escreva algo sobre você..."></textarea>
+                </div>
+            </fieldset>
+
+            <fieldset>
+
+                <legend>Cor Favorita</legend>
+
+                <div>
+                    <label for="icor"><b>Sua cor favorita:</b></label> <br>
+                    <input type="color" name="cor" id="icolor" required>
+                </div>
+            </fieldset>
+
+            <fieldset>
+
+                <legend>Foto de Cadastro</legend>
+
+                <div>
+                    <input type="file" name="foto" id="ifoto">
+                </div>
+
+            </fieldset>
+
+            <fieldset>
+
+                <legend>Nivel de Satisfação</legend>
+
+                <div>
+                    <label for="inivel"><b>Nivel de Satisfação da Pesquisa</b></label>
+                    <input type="range" name="nivel" id="inivel" required>
+                </div>
+            </fieldset>
+
+            <div class="botôes">
+                <input type="submit" value="Cadastrar">
+                <input type="reset" value="Excluir">
+            </div>
+        </form>
+    </main>
+    <footer>
+        <p>Site criado para estudos</p>
+    </footer>
