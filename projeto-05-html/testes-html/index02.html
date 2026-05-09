@@ -1,0 +1,1479 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grêmio Estudantil — E.E. Maria Helena Duarte Caetano</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ═══════════════════════════════════════════
+   TOKENS
+═══════════════════════════════════════════ */
+:root {
+  --navy:      #06143a;
+  --navy-mid:  #0d2155;
+  --navy-lt:   #163075;
+  --blue:      #1a5cc8;
+  --blue-lt:   #2f7be8;
+  --sky:       #5aaeff;
+  --sky-lt:    #a8d4ff;
+  --accent:    #f0c040;
+  --accent-lt: #fde080;
+  --white:     #ffffff;
+  --off-white: #f0f5ff;
+  --text:      #e8eefa;
+  --muted:     #8fa8d8;
+  --border:    rgba(90,174,255,.18);
+  --card:      rgba(22,48,117,.55);
+  --glass:     rgba(255,255,255,.06);
+  --radius:    14px;
+  --ff-serif:  'Playfair Display', Georgia, serif;
+  --ff-sans:   'Plus Jakarta Sans', system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--ff-sans);
+  background: var(--navy);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+/* ═══════════════════════════════════════════
+   GLOBAL UTILS
+═══════════════════════════════════════════ */
+.section-label {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: .7rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--sky); margin-bottom: 14px;
+}
+.section-label::before, .section-label::after {
+  content: ''; display: block; width: 28px; height: 1px; background: var(--sky);
+}
+.section-title {
+  font-family: var(--ff-serif); font-size: clamp(2rem, 5vw, 3.2rem);
+  line-height: 1.12; color: var(--white);
+}
+.section-title em { font-style: italic; color: var(--accent); }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 13px 30px; border-radius: 50px;
+  font-family: var(--ff-sans); font-size: .88rem; font-weight: 700;
+  letter-spacing: .05em; text-decoration: none; border: none; cursor: pointer;
+  transition: transform .2s, box-shadow .2s, background .2s;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(0,0,0,.25); }
+.btn-primary { background: var(--accent); color: var(--navy); }
+.btn-primary:hover { background: var(--accent-lt); }
+.btn-blue { background: var(--blue); color: #fff; }
+.btn-blue:hover { background: var(--blue-lt); }
+.btn-ghost { background: transparent; color: var(--white); border: 1.5px solid var(--border); }
+.btn-ghost:hover { border-color: var(--sky); color: var(--sky); }
+
+.reveal {
+  opacity: 0; transform: translateY(36px);
+  transition: opacity .75s ease, transform .75s ease;
+}
+.reveal.visible { opacity: 1; transform: none; }
+
+/* ═══════════════════════════════════════════
+   STAR FIELD BACKGROUND
+═══════════════════════════════════════════ */
+#stars-canvas {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  opacity: .35;
+}
+
+/* ═══════════════════════════════════════════
+   NAV
+═══════════════════════════════════════════ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 5%; height: 70px;
+  background: rgba(6,20,58,.85);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  transition: box-shadow .3s;
+}
+nav.scrolled { box-shadow: 0 4px 32px rgba(0,0,0,.4); }
+
+.nav-brand { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+.brand-logo {
+  width: 44px; height: 44px; border-radius: 12px;
+  background: linear-gradient(135deg, var(--blue), var(--navy-lt));
+  border: 1px solid var(--border);
+  display: grid; place-items: center;
+  font-family: var(--ff-serif); font-size: 1.25rem; color: var(--accent);
+  flex-shrink: 0;
+}
+.brand-text { line-height: 1.2; }
+.brand-text strong { display: block; font-size: .88rem; font-weight: 700; color: var(--white); }
+.brand-text small { font-size: .66rem; font-weight: 500; color: var(--muted); letter-spacing: .06em; }
+
+.nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
+.nav-links a {
+  font-size: .82rem; font-weight: 600; text-decoration: none;
+  color: var(--muted); letter-spacing: .04em;
+  transition: color .2s;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--white); }
+.nav-cta {
+  background: var(--accent) !important; color: var(--navy) !important;
+  padding: 8px 22px; border-radius: 30px; font-weight: 700 !important;
+  transition: background .2s, transform .15s !important;
+}
+.nav-cta:hover { background: var(--accent-lt) !important; transform: translateY(-1px); }
+
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+.hamburger span { display: block; width: 25px; height: 2px; background: var(--text); border-radius: 2px; transition: .3s; }
+
+.mobile-menu {
+  display: none; position: fixed; inset: 0; z-index: 190;
+  background: rgba(6,20,58,.97); backdrop-filter: blur(20px);
+  flex-direction: column; align-items: center; justify-content: center; gap: 28px;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a { font-family: var(--ff-serif); font-size: 2rem; color: var(--white); text-decoration: none; transition: color .2s; }
+.mobile-menu a:hover { color: var(--accent); }
+.mobile-close { position: absolute; top: 22px; right: 5%; background: none; border: none; color: var(--muted); font-size: 1.8rem; cursor: pointer; }
+
+/* ═══════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════ */
+#hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; padding: 100px 5% 80px;
+  position: relative; overflow: hidden;
+}
+
+.hero-glow {
+  position: absolute; top: 20%; left: 50%; transform: translateX(-50%);
+  width: min(900px,140vw); height: 500px;
+  background: radial-gradient(ellipse, rgba(26,92,200,.45) 0%, transparent 70%);
+  pointer-events: none; z-index: 1;
+}
+.hero-ring {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  width: 700px; height: 700px; border-radius: 50%;
+  border: 1px solid rgba(90,174,255,.08);
+  pointer-events: none; z-index: 1;
+  animation: pulse-ring 6s ease-in-out infinite;
+}
+.hero-ring2 {
+  width: 1000px; height: 1000px;
+  animation-delay: 2s;
+}
+@keyframes pulse-ring {
+  0%,100% { opacity: .4; transform: translate(-50%,-50%) scale(1); }
+  50% { opacity: .1; transform: translate(-50%,-50%) scale(1.05); }
+}
+
+.hero-badge {
+  position: relative; z-index: 2;
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(240,192,64,.12); border: 1px solid rgba(240,192,64,.35);
+  color: var(--accent); padding: 7px 20px; border-radius: 30px;
+  font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+  margin-bottom: 28px;
+  animation: fadeUp .6s ease both;
+}
+.hero-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: blink 1.5s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
+
+#hero h1 {
+  font-family: var(--ff-serif); font-size: clamp(2.8rem, 8.5vw, 7rem);
+  line-height: 1.03; max-width: 950px;
+  position: relative; z-index: 2;
+  animation: fadeUp .7s .1s ease both;
+}
+#hero h1 .hl { color: var(--accent); }
+#hero h1 .hl2 { color: var(--sky); }
+
+.hero-divider {
+  width: 1px; height: 60px;
+  background: linear-gradient(to bottom, var(--sky), transparent);
+  margin: 28px auto; position: relative; z-index: 2;
+  animation: fadeUp .7s .2s ease both;
+}
+
+.hero-sub {
+  max-width: 580px; color: var(--muted); font-size: 1rem; line-height: 1.8;
+  position: relative; z-index: 2;
+  animation: fadeUp .7s .25s ease both;
+}
+
+.hero-actions {
+  margin-top: 36px; display: flex; gap: 14px; flex-wrap: wrap; justify-content: center;
+  position: relative; z-index: 2;
+  animation: fadeUp .7s .35s ease both;
+}
+
+.hero-stats {
+  margin-top: 72px; display: flex; gap: 0; flex-wrap: wrap; justify-content: center;
+  position: relative; z-index: 2;
+  animation: fadeUp .7s .45s ease both;
+  border: 1px solid var(--border); border-radius: 16px;
+  overflow: hidden; background: var(--glass); backdrop-filter: blur(10px);
+}
+.hero-stat {
+  padding: 24px 40px; text-align: center;
+  border-right: 1px solid var(--border);
+}
+.hero-stat:last-child { border-right: none; }
+.hero-stat .num { font-family: var(--ff-serif); font-size: 2.4rem; color: var(--accent); line-height: 1; }
+.hero-stat .lbl { font-size: .72rem; font-weight: 600; color: var(--muted); letter-spacing: .1em; text-transform: uppercase; margin-top: 6px; }
+
+.scroll-indicator {
+  position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 8px; z-index: 2;
+  color: var(--muted); font-size: .68rem; letter-spacing: .14em; text-transform: uppercase;
+}
+.scroll-line { width: 1px; height: 50px; background: linear-gradient(to bottom, var(--sky), transparent); animation: scroll-anim 2s ease-in-out infinite; }
+@keyframes scroll-anim { 0%{opacity:0;transform:scaleY(0);transform-origin:top} 50%{opacity:1;transform:scaleY(1)} 100%{opacity:0;transform:scaleY(1);transform-origin:bottom} }
+
+/* ═══════════════════════════════════════════
+   MARQUEE STRIP
+═══════════════════════════════════════════ */
+.marquee-strip {
+  background: var(--accent); color: var(--navy); overflow: hidden;
+  padding: 14px 0; white-space: nowrap; position: relative; z-index: 2;
+}
+.marquee-inner { display: inline-flex; gap: 48px; animation: marquee 25s linear infinite; }
+.marquee-item { font-size: .8rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.marquee-sep { opacity: .4; }
+@keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* ═══════════════════════════════════════════
+   SOBRE
+═══════════════════════════════════════════ */
+#sobre {
+  padding: 110px 8%; position: relative; z-index: 2;
+  display: grid; grid-template-columns: 1.1fr 1fr; gap: 80px; align-items: center;
+}
+.sobre-content p { color: var(--muted); line-height: 1.85; margin-top: 18px; font-size: .94rem; }
+.sobre-content p + p { margin-top: 14px; }
+.values-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 32px; }
+.value-box {
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 18px; transition: border-color .2s, transform .2s;
+}
+.value-box:hover { border-color: var(--sky); transform: translateY(-3px); }
+.value-box .icon { font-size: 1.5rem; margin-bottom: 8px; }
+.value-box h4 { font-size: .85rem; font-weight: 700; color: var(--white); }
+.value-box p { font-size: .75rem; color: var(--muted); margin-top: 4px; line-height: 1.5; }
+
+.sobre-visual { position: relative; }
+.sobre-big-card {
+  background: linear-gradient(135deg, var(--navy-lt), var(--blue));
+  border: 1px solid var(--border); border-radius: 20px;
+  aspect-ratio: .85; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 16px;
+  font-family: var(--ff-serif); font-size: 6rem; color: rgba(255,255,255,.15);
+  position: relative; overflow: hidden;
+}
+.sobre-big-card::before {
+  content: ''; position: absolute; inset: 0;
+  background: repeating-linear-gradient(60deg, transparent, transparent 14px, rgba(255,255,255,.03) 14px, rgba(255,255,255,.03) 28px);
+}
+.sobre-big-card .school-name {
+  position: absolute; bottom: 28px; left: 0; right: 0; text-align: center;
+  font-family: var(--ff-serif); font-size: 1rem; color: rgba(255,255,255,.7); letter-spacing: .04em;
+}
+.float-badge1, .float-badge2 {
+  position: absolute; background: var(--card); border: 1px solid var(--border);
+  border-radius: 12px; padding: 14px 18px; backdrop-filter: blur(10px);
+  font-size: .82rem; font-weight: 600;
+}
+.float-badge1 { top: -16px; right: -16px; }
+.float-badge2 { bottom: -16px; left: -16px; background: var(--accent); color: var(--navy); font-family: var(--ff-serif); font-size: 1rem; border-color: transparent; }
+.float-badge1 .fb-num { font-family: var(--ff-serif); font-size: 1.6rem; color: var(--sky); display: block; }
+
+/* ═══════════════════════════════════════════
+   GESTÃO
+═══════════════════════════════════════════ */
+#gestao {
+  padding: 110px 5%; position: relative; z-index: 2;
+  background: linear-gradient(to bottom, transparent, rgba(13,33,85,.6), transparent);
+}
+.gestao-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 20px; margin-bottom: 56px; }
+.gestao-head p { max-width: 360px; color: var(--muted); font-size: .88rem; line-height: 1.75; }
+
+/* President highlight */
+.president-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
+.president-card {
+  grid-column: 1 / -1;
+  background: linear-gradient(135deg, var(--navy-lt), var(--blue));
+  border: 1px solid rgba(90,174,255,.3); border-radius: 20px;
+  padding: 40px; display: flex; gap: 32px; align-items: center;
+  position: relative; overflow: hidden;
+  transition: transform .3s, box-shadow .3s;
+}
+.president-card:hover { transform: translateY(-4px); box-shadow: 0 20px 60px rgba(26,92,200,.35); }
+.president-card::before {
+  content: ''; position: absolute; top: -40%; right: -10%;
+  width: 300px; height: 300px; border-radius: 50%;
+  background: radial-gradient(rgba(240,192,64,.12), transparent 70%);
+}
+.pres-avatar {
+  width: 90px; height: 90px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), #a07800);
+  display: grid; place-items: center; font-size: 2.8rem; flex-shrink: 0;
+  border: 3px solid rgba(240,192,64,.4);
+}
+.pres-info .role { font-size: .7rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--accent); }
+.pres-info .name { font-family: var(--ff-serif); font-size: 1.7rem; color: var(--white); margin-top: 4px; }
+.pres-info .year { font-size: .82rem; color: rgba(255,255,255,.55); margin-top: 6px; }
+.pres-info .quote { font-size: .85rem; color: rgba(255,255,255,.7); margin-top: 14px; font-style: italic; line-height: 1.6; border-left: 2px solid var(--accent); padding-left: 14px; }
+
+.board-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 18px; }
+.member-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+  overflow: hidden; transition: transform .3s, box-shadow .3s, border-color .3s;
+}
+.member-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(0,0,0,.3); border-color: var(--sky); }
+.member-av {
+  width: 100%; aspect-ratio: 1;
+  display: grid; place-items: center; font-size: 3.2rem;
+  position: relative;
+}
+.member-card:nth-child(1) .member-av { background: linear-gradient(135deg,#1a5cc8,#0a2a70); }
+.member-card:nth-child(2) .member-av { background: linear-gradient(135deg,#0e8a6e,#053d30); }
+.member-card:nth-child(3) .member-av { background: linear-gradient(135deg,#7a3aad,#3a0f70); }
+.member-card:nth-child(4) .member-av { background: linear-gradient(135deg,#c96e1a,#6e3200); }
+.member-card:nth-child(5) .member-av { background: linear-gradient(135deg,#b93232,#5a0f0f); }
+.member-card:nth-child(6) .member-av { background: linear-gradient(135deg,#3a8aa0,#0f3a50); }
+.member-card:nth-child(7) .member-av { background: linear-gradient(135deg,#5a8a20,#253d08); }
+.member-card:nth-child(8) .member-av { background: linear-gradient(135deg,#1a7cc8,#082a60); }
+.member-info { padding: 18px 20px; }
+.member-role { font-size: .65rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--sky); }
+.member-name { font-family: var(--ff-serif); font-size: 1.05rem; color: var(--white); margin-top: 4px; }
+.member-yr { font-size: .76rem; color: var(--muted); margin-top: 4px; }
+
+/* ═══════════════════════════════════════════
+   NÚMEROS / IMPACTO
+═══════════════════════════════════════════ */
+#impacto {
+  padding: 100px 5%; position: relative; z-index: 2;
+  text-align: center;
+}
+.impacto-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; margin-top: 56px; }
+.impacto-block {
+  background: var(--card); border: 1px solid var(--border);
+  padding: 48px 20px; position: relative; overflow: hidden;
+  transition: background .3s;
+}
+.impacto-block:hover { background: rgba(22,48,117,.85); }
+.impacto-block::before {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+  background: var(--blue); transform: scaleX(0); transform-origin: left; transition: transform .4s;
+}
+.impacto-block:hover::before { transform: scaleX(1); }
+.impacto-block:first-child { border-radius: var(--radius) 0 0 var(--radius); }
+.impacto-block:last-child { border-radius: 0 var(--radius) var(--radius) 0; }
+.impacto-icon { font-size: 2.4rem; margin-bottom: 16px; }
+.impacto-num { font-family: var(--ff-serif); font-size: 3.5rem; color: var(--accent); line-height: 1; }
+.impacto-plus { color: var(--sky); }
+.impacto-lbl { font-size: .78rem; font-weight: 600; color: var(--muted); letter-spacing: .1em; text-transform: uppercase; margin-top: 10px; }
+
+/* ═══════════════════════════════════════════
+   PROJETOS
+═══════════════════════════════════════════ */
+#projetos { padding: 110px 5%; position: relative; z-index: 2; }
+.projetos-tabs {
+  display: flex; gap: 8px; flex-wrap: wrap; margin: 40px 0 32px;
+}
+.tab-btn {
+  padding: 8px 20px; border-radius: 30px; border: 1px solid var(--border);
+  background: transparent; color: var(--muted); font-family: var(--ff-sans);
+  font-size: .78rem; font-weight: 600; letter-spacing: .06em; cursor: pointer;
+  transition: background .2s, color .2s, border-color .2s;
+}
+.tab-btn:hover { border-color: var(--sky); color: var(--sky); }
+.tab-btn.active { background: var(--blue); color: #fff; border-color: var(--blue); }
+
+.projetos-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 22px; }
+.projeto-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 18px;
+  padding: 32px; position: relative; overflow: hidden;
+  transition: transform .3s, box-shadow .3s, border-color .3s;
+  display: none;
+}
+.projeto-card.visible-card { display: block; animation: cardIn .4s ease both; }
+@keyframes cardIn { from{opacity:0;transform:scale(.96)} to{opacity:1;transform:scale(1)} }
+.projeto-card:hover { transform: translateY(-5px); box-shadow: 0 18px 52px rgba(0,0,0,.3); border-color: rgba(90,174,255,.35); }
+.projeto-card::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(26,92,200,.04), transparent);
+  pointer-events: none;
+}
+.p-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+.p-icon {
+  width: 56px; height: 56px; border-radius: 14px;
+  display: grid; place-items: center; font-size: 1.6rem;
+  flex-shrink: 0;
+}
+.ic-cultural { background: rgba(240,192,64,.15); border: 1px solid rgba(240,192,64,.25); }
+.ic-esporte  { background: rgba(46,160,67,.15);  border: 1px solid rgba(46,160,67,.25); }
+.ic-social   { background: rgba(185,50,50,.15);  border: 1px solid rgba(185,50,50,.25); }
+.ic-edu      { background: rgba(90,174,255,.15); border: 1px solid rgba(90,174,255,.25); }
+.ic-ambiental{ background: rgba(100,200,80,.15); border: 1px solid rgba(100,200,80,.25); }
+.p-status { font-size: .65rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; }
+.st-ativo    { background: rgba(74,222,128,.12); color: #4ade80; border: 1px solid rgba(74,222,128,.25); }
+.st-plan     { background: rgba(250,204,21,.12); color: #facc15; border: 1px solid rgba(250,204,21,.25); }
+.st-proximo  { background: rgba(96,165,250,.12); color: #60a5fa; border: 1px solid rgba(96,165,250,.25); }
+.projeto-card h3 { font-family: var(--ff-serif); font-size: 1.2rem; color: var(--white); margin-bottom: 10px; }
+.projeto-card p { font-size: .84rem; color: var(--muted); line-height: 1.72; }
+.p-category { margin-top: 20px; font-size: .68rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--sky); }
+.p-progress { margin-top: 16px; }
+.p-progress-bar { height: 4px; background: rgba(255,255,255,.08); border-radius: 2px; overflow: hidden; }
+.p-progress-fill { height: 100%; border-radius: 2px; background: linear-gradient(to right, var(--blue), var(--sky)); transition: width 1s ease; }
+.p-progress-lbl { display: flex; justify-content: space-between; font-size: .68rem; color: var(--muted); margin-top: 6px; }
+
+/* ═══════════════════════════════════════════
+   AGENDA
+═══════════════════════════════════════════ */
+#agenda { padding: 110px 5%; position: relative; z-index: 2; }
+.agenda-wrap { display: grid; grid-template-columns: 340px 1fr; gap: 40px; align-items: start; margin-top: 48px; }
+
+/* Calendar */
+.cal-box { background: var(--card); border: 1px solid var(--border); border-radius: 18px; overflow: hidden; }
+.cal-head {
+  background: linear-gradient(135deg, var(--blue), var(--navy-lt));
+  padding: 22px 24px; display: flex; align-items: center; justify-content: space-between;
+}
+.cal-head h3 { font-family: var(--ff-serif); font-size: 1.1rem; color: #fff; }
+.cal-btn { background: rgba(255,255,255,.12); border: none; color: #fff; width: 30px; height: 30px; border-radius: 8px; cursor: pointer; font-size: 1rem; transition: background .2s; display: flex; align-items: center; justify-content: center; }
+.cal-btn:hover { background: rgba(255,255,255,.25); }
+.cal-body { padding: 16px; }
+.cal-dow-row { display: grid; grid-template-columns: repeat(7,1fr); text-align: center; margin-bottom: 4px; }
+.cal-dow { padding: 6px 0; font-size: .63rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.cal-days { display: grid; grid-template-columns: repeat(7,1fr); }
+.cal-d {
+  aspect-ratio: 1; display: grid; place-items: center; font-size: .8rem;
+  border-radius: 8px; cursor: pointer; transition: background .15s, color .15s; color: var(--text);
+}
+.cal-d:hover { background: rgba(90,174,255,.15); }
+.cal-d.other { color: rgba(143,168,216,.3); }
+.cal-d.today { background: var(--blue); color: #fff; font-weight: 700; }
+.cal-d.has-ev { position: relative; }
+.cal-d.has-ev::after { content:''; position:absolute; bottom:3px; left:50%; transform:translateX(-50%); width:4px; height:4px; border-radius:50%; background:var(--accent); }
+
+/* Events */
+.events-col { display: flex; flex-direction: column; gap: 16px; }
+.event-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 24px 28px; display: flex; gap: 22px; align-items: flex-start;
+  transition: border-color .2s, transform .2s, box-shadow .2s;
+  cursor: pointer;
+}
+.event-card:hover { border-color: var(--sky); transform: translateX(4px); box-shadow: -4px 0 0 var(--blue); }
+.ev-date { text-align: center; min-width: 52px; }
+.ev-day { font-family: var(--ff-serif); font-size: 2.4rem; color: var(--accent); line-height: 1; }
+.ev-month { font-size: .62rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.ev-info h4 { font-size: .95rem; font-weight: 700; color: var(--white); }
+.ev-info p { font-size: .81rem; color: var(--muted); margin-top: 5px; line-height: 1.5; }
+.ev-meta { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+.ev-tag { font-size: .63rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: 3px 10px; border-radius: 20px; }
+.et-cultural { background: rgba(240,192,64,.12); color: var(--accent); }
+.et-esporte  { background: rgba(74,222,128,.12); color: #4ade80; }
+.et-reuniao  { background: rgba(96,165,250,.12); color: #60a5fa; }
+.et-social   { background: rgba(185,50,50,.12);  color: #f87171; }
+.ev-time { font-size: .72rem; color: var(--muted); display: flex; align-items: center; gap: 4px; }
+
+/* ═══════════════════════════════════════════
+   DOCUMENTOS
+═══════════════════════════════════════════ */
+#documentos { padding: 110px 5%; position: relative; z-index: 2; background: rgba(13,33,85,.4); }
+.docs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; margin-top: 48px; }
+.doc-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 28px; display: flex; align-items: flex-start; gap: 18px;
+  transition: border-color .2s, transform .2s;
+}
+.doc-card:hover { border-color: var(--sky); transform: translateY(-3px); }
+.doc-icon { font-size: 2rem; flex-shrink: 0; }
+.doc-info h4 { font-size: .92rem; font-weight: 700; color: var(--white); }
+.doc-info p { font-size: .77rem; color: var(--muted); margin-top: 4px; line-height: 1.5; }
+.doc-dl {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-top: 14px; font-size: .72rem; font-weight: 700; color: var(--sky);
+  text-decoration: none; letter-spacing: .05em; text-transform: uppercase;
+  transition: color .2s;
+}
+.doc-dl:hover { color: var(--accent); }
+
+/* ═══════════════════════════════════════════
+   MURAL / FEED
+═══════════════════════════════════════════ */
+#mural { padding: 110px 5%; position: relative; z-index: 2; }
+.mural-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 48px; }
+.mural-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+  overflow: hidden; transition: transform .3s, box-shadow .3s;
+}
+.mural-card:hover { transform: translateY(-5px); box-shadow: 0 16px 48px rgba(0,0,0,.35); }
+.mural-img {
+  width: 100%; aspect-ratio: 16/9;
+  display: grid; place-items: center; font-size: 3rem;
+  position: relative; overflow: hidden;
+}
+.mural-card:nth-child(1) .mural-img { background: linear-gradient(135deg,#0d2155,#1a5cc8); }
+.mural-card:nth-child(2) .mural-img { background: linear-gradient(135deg,#163075,#0e8a6e); }
+.mural-card:nth-child(3) .mural-img { background: linear-gradient(135deg,#1a5cc8,#7a3aad); }
+.mural-card:nth-child(4) .mural-img { background: linear-gradient(135deg,#3a8aa0,#163075); }
+.mural-card:nth-child(5) .mural-img { background: linear-gradient(135deg,#0d2155,#c96e1a); }
+.mural-card:nth-child(6) .mural-img { background: linear-gradient(135deg,#5a8a20,#163075); }
+.mural-body { padding: 22px; }
+.mural-tag { font-size: .65rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--sky); }
+.mural-body h3 { font-size: .95rem; font-weight: 700; color: var(--white); margin: 8px 0 8px; line-height: 1.4; }
+.mural-body p { font-size: .8rem; color: var(--muted); line-height: 1.6; }
+.mural-meta { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; font-size: .72rem; color: var(--muted); }
+
+/* ═══════════════════════════════════════════
+   CONTATO
+═══════════════════════════════════════════ */
+#contato { padding: 110px 5%; position: relative; z-index: 2; }
+.contato-wrap { display: grid; grid-template-columns: 1fr 1.3fr; gap: 80px; align-items: start; margin-top: 48px; }
+.contato-left p { color: var(--muted); line-height: 1.8; font-size: .92rem; margin-top: 14px; }
+.channels { display: flex; flex-direction: column; gap: 14px; margin-top: 32px; }
+.ch {
+  display: flex; align-items: center; gap: 16px;
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 16px 20px; transition: border-color .2s;
+}
+.ch:hover { border-color: var(--sky); }
+.ch-ic {
+  width: 42px; height: 42px; border-radius: 10px; flex-shrink: 0;
+  background: rgba(26,92,200,.2); border: 1px solid rgba(90,174,255,.2);
+  display: grid; place-items: center; font-size: 1.2rem;
+}
+.ch-text strong { display: block; font-size: .82rem; font-weight: 700; color: var(--white); }
+.ch-text span { font-size: .76rem; color: var(--muted); }
+
+/* Form */
+.contact-form {
+  background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 40px;
+}
+.contact-form h3 { font-family: var(--ff-serif); font-size: 1.4rem; color: var(--white); margin-bottom: 28px; }
+.form-row { margin-bottom: 18px; }
+.form-row label { display: block; font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--sky); margin-bottom: 8px; }
+.form-row input, .form-row textarea, .form-row select {
+  width: 100%; background: rgba(255,255,255,.05); border: 1px solid var(--border);
+  border-radius: 10px; padding: 13px 16px; color: var(--text);
+  font-family: var(--ff-sans); font-size: .88rem; outline: none;
+  transition: border-color .2s, background .2s;
+}
+.form-row input:focus, .form-row textarea:focus, .form-row select:focus {
+  border-color: var(--blue); background: rgba(26,92,200,.08);
+}
+.form-row textarea { resize: vertical; min-height: 120px; }
+.form-row select option { background: var(--navy-mid); }
+.form-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.btn-send {
+  width: 100%; padding: 15px; border-radius: 50px;
+  background: linear-gradient(135deg, var(--blue), var(--blue-lt));
+  color: #fff; border: none; font-family: var(--ff-sans);
+  font-size: .9rem; font-weight: 700; letter-spacing: .06em;
+  cursor: pointer; transition: opacity .2s, transform .2s;
+}
+.btn-send:hover { opacity: .88; transform: translateY(-2px); }
+.form-success-msg {
+  display: none; text-align: center; padding: 40px 20px;
+}
+.form-success-msg .check { font-size: 3rem; margin-bottom: 16px; }
+.form-success-msg h4 { font-family: var(--ff-serif); font-size: 1.5rem; color: var(--white); }
+.form-success-msg p { color: var(--muted); font-size: .88rem; margin-top: 8px; }
+
+/* ═══════════════════════════════════════════
+   FAQ
+═══════════════════════════════════════════ */
+#faq { padding: 110px 5%; position: relative; z-index: 2; background: rgba(13,33,85,.4); }
+.faq-wrap { max-width: 740px; margin: 48px auto 0; display: flex; flex-direction: column; gap: 12px; }
+.faq-item {
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;
+}
+.faq-q {
+  width: 100%; background: none; border: none; padding: 22px 24px;
+  display: flex; justify-content: space-between; align-items: center; gap: 16px;
+  font-family: var(--ff-sans); font-size: .92rem; font-weight: 700; color: var(--white);
+  cursor: pointer; text-align: left;
+}
+.faq-q:hover { color: var(--sky); }
+.faq-arrow { font-size: 1.1rem; color: var(--sky); transition: transform .3s; flex-shrink: 0; }
+.faq-item.open .faq-arrow { transform: rotate(180deg); }
+.faq-a {
+  max-height: 0; overflow: hidden;
+  font-size: .86rem; color: var(--muted); line-height: 1.75;
+  transition: max-height .4s ease, padding .3s;
+  padding: 0 24px;
+}
+.faq-item.open .faq-a { max-height: 400px; padding-bottom: 22px; }
+
+/* ═══════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════ */
+footer {
+  background: var(--navy-mid); border-top: 1px solid var(--border);
+  padding: 60px 5% 32px; position: relative; z-index: 2;
+}
+.footer-top { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 48px; }
+.footer-brand p { color: var(--muted); font-size: .83rem; line-height: 1.75; margin-top: 16px; max-width: 280px; }
+.footer-col h5 { font-size: .72rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--sky); margin-bottom: 16px; }
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer-col a { font-size: .83rem; color: var(--muted); text-decoration: none; transition: color .2s; }
+.footer-col a:hover { color: var(--white); }
+.footer-bottom { border-top: 1px solid var(--border); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+.footer-bottom p { font-size: .78rem; color: var(--muted); }
+.social-links { display: flex; gap: 10px; }
+.soc-btn {
+  width: 36px; height: 36px; border-radius: 8px; background: var(--card);
+  border: 1px solid var(--border); display: grid; place-items: center;
+  font-size: .95rem; text-decoration: none; transition: border-color .2s, transform .2s;
+}
+.soc-btn:hover { border-color: var(--sky); transform: translateY(-2px); }
+
+/* ═══════════════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════════════ */
+@keyframes fadeUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════ */
+@media (max-width: 1100px) {
+  .footer-top { grid-template-columns: 1fr 1fr; }
+  .impacto-grid { grid-template-columns: 1fr 1fr; }
+  .impacto-block:nth-child(1) { border-radius: var(--radius) 0 0 0; }
+  .impacto-block:nth-child(2) { border-radius: 0 var(--radius) 0 0; }
+  .impacto-block:nth-child(3) { border-radius: 0 0 0 var(--radius); }
+  .impacto-block:nth-child(4) { border-radius: 0 0 var(--radius) 0; }
+}
+@media (max-width: 900px) {
+  #sobre { grid-template-columns: 1fr; }
+  .sobre-visual { max-width: 380px; margin: 0 auto; }
+  .agenda-wrap { grid-template-columns: 1fr; }
+  .contato-wrap { grid-template-columns: 1fr; }
+  .mural-grid { grid-template-columns: 1fr 1fr; }
+  .president-card { flex-direction: column; text-align: center; }
+  .pres-info .quote { text-align: left; }
+}
+@media (max-width: 720px) {
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  .hero-stats { flex-direction: column; border-radius: 12px; }
+  .hero-stat { border-right: none; border-bottom: 1px solid var(--border); }
+  .hero-stat:last-child { border-bottom: none; }
+  .footer-top { grid-template-columns: 1fr; }
+  .mural-grid { grid-template-columns: 1fr; }
+  .form-2col { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  section { padding: 70px 4%; }
+  .impacto-grid { grid-template-columns: 1fr 1fr; gap: 1px; }
+  .projetos-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="stars-canvas"></canvas>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-brand">
+    <div class="brand-logo">G</div>
+    <div class="brand-text">
+      <strong>Grêmio Estudantil</strong>
+      <small>E.E. Maria Helena Duarte Caetano</small>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#gestao">Gestão</a></li>
+    <li><a href="#projetos">Projetos</a></li>
+    <li><a href="#agenda">Agenda</a></li>
+    <li><a href="#mural">Mural</a></li>
+    <li><a href="#documentos">Documentos</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#contato" class="nav-cta">Contato</a></li>
+  </ul>
+  <div class="hamburger" onclick="toggleMobile()"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="toggleMobile()">✕</button>
+  <a href="#sobre"       onclick="toggleMobile()">Sobre</a>
+  <a href="#gestao"      onclick="toggleMobile()">Gestão</a>
+  <a href="#projetos"    onclick="toggleMobile()">Projetos</a>
+  <a href="#agenda"      onclick="toggleMobile()">Agenda</a>
+  <a href="#mural"       onclick="toggleMobile()">Mural</a>
+  <a href="#documentos"  onclick="toggleMobile()">Documentos</a>
+  <a href="#faq"         onclick="toggleMobile()">FAQ</a>
+  <a href="#contato"     onclick="toggleMobile()">Contato</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-ring"></div>
+  <div class="hero-ring hero-ring2"></div>
+
+  <div class="hero-badge"><span class="dot"></span> Gestão Ativa 2025 · 2026</div>
+
+  <h1>
+    <span class="hl2">Grêmio</span><br>
+    Estudantil<br>
+    <span class="hl">Maria Helena</span>
+  </h1>
+
+  <div class="hero-divider"></div>
+
+  <p class="hero-sub">
+    Representando cada estudante da E.E. Maria Helena Duarte Caetano com voz, participação e transformação. Juntos somos mais fortes.
+  </p>
+
+  <div class="hero-actions">
+    <a href="#projetos" class="btn btn-primary">🚀 Nossos Projetos</a>
+    <a href="#gestao"   class="btn btn-ghost">👥 Conheça a Diretoria</a>
+    <a href="#contato"  class="btn btn-blue">✉️ Fale Conosco</a>
+  </div>
+
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="num">600<span class="impacto-plus">+</span></div><div class="lbl">Estudantes</div></div>
+    <div class="hero-stat"><div class="num">12</div><div class="lbl">Projetos Ativos</div></div>
+    <div class="hero-stat"><div class="num">8</div><div class="lbl">Diretores</div></div>
+    <div class="hero-stat"><div class="num">2022</div><div class="lbl">Fundado em</div></div>
+    <div class="hero-stat"><div class="num">3</div><div class="lbl">Anos de Luta</div></div>
+  </div>
+
+  <div class="scroll-indicator">
+    <span>Role</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-inner" id="marqueeInner"></div>
+</div>
+
+<!-- SOBRE -->
+<section id="sobre">
+  <div class="sobre-content reveal">
+    <div class="section-label">Quem somos</div>
+    <h2 class="section-title">A voz que <em>representa</em> cada estudante</h2>
+    <p>O Grêmio Estudantil da E.E. Maria Helena Duarte Caetano é o órgão legítimo de representação dos alunos, eleito democraticamente para defender seus direitos e promover uma escola mais justa, inclusiva e participativa.</p>
+    <p>Atuamos como ponte entre os estudantes e a gestão escolar, mediamos conflitos, propomos melhorias e organizamos ações culturais, esportivas e sociais que fortalecem o sentimento de pertencimento e comunidade.</p>
+    <p>Nossa gestão acredita que a escola é um espaço vivo, que se constrói com a participação de todos. Por isso, mantemos nossas reuniões abertas, decisões transparentes e projetos colaborativos.</p>
+    <div class="values-grid">
+      <div class="value-box"><div class="icon">🤝</div><h4>Democracia</h4><p>Decisões coletivas e abertas à participação de todos.</p></div>
+      <div class="value-box"><div class="icon">✊</div><h4>Representatividade</h4><p>Cada voz importa, cada turno e turma tem espaço.</p></div>
+      <div class="value-box"><div class="icon">🌈</div><h4>Inclusão</h4><p>Escola segura e acolhedora para todas as identidades.</p></div>
+      <div class="value-box"><div class="icon">🔍</div><h4>Transparência</h4><p>Prestação de contas pública e acesso livre a documentos.</p></div>
+    </div>
+  </div>
+  <div class="sobre-visual reveal">
+    <div class="sobre-big-card">
+      🏫
+      <div class="school-name">E.E. Maria Helena Duarte Caetano · Cubatão, SP</div>
+    </div>
+    <div class="float-badge1">
+      <span class="fb-num">600+</span>
+      Estudantes representados
+    </div>
+    <div class="float-badge2">Desde 2025</div>
+  </div>
+</section>
+
+<!-- GESTÃO -->
+<section id="gestao">
+  <div class="gestao-head reveal">
+    <div>
+      <div class="section-label">Diretoria</div>
+      <h2 class="section-title">Nossa <em>gestão</em> 2025–2026</h2>
+    </div>
+    <p>Eleitos democraticamente pelos estudantes, nossa diretoria representa todos os turnos e séries da escola.</p>
+  </div>
+
+  <div class="president-row reveal">
+    <div class="president-card">
+      <div class="pres-avatar">👑</div>
+      <div class="pres-info">
+        <div class="role">★ Presidência</div>
+        <div class="name">Liris Hanna Fernandes</div>
+        <div class="year">3º Ano </div>
+        <div class="quote">"Nossa missão é fazer de cada estudante um agente ativo da transformação da nossa escola. O grêmio não é só um cargo — é um compromisso."</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="board-grid reveal">
+    <div class="member-card">
+      <div class="member-av">⚡</div>
+      <div class="member-info">
+        <div class="member-role">Vice-Presidência</div>
+        <div class="member-name">Yasmin Ferreira </div>
+        <div class="member-yr">3º Ano </div>
+      </div>
+    </div>
+    <div class="member-card">
+      <div class="member-av">⚽</div>
+      <div class="member-info">
+        <div class="member-role">Dir. Eventos</div>
+        <div class="member-name">Rychard Julio</div>
+        <div class="member-yr">3º Ano</div>
+      </div>
+    </div>
+    <div class="member-card">
+      <div class="member-av">📢</div>
+      <div class="member-info">
+        <div class="member-role">Cordenador de relações sociais</div>
+        <div class="member-name">Miguel de Souza</div>
+        <div class="member-yr">3º Ano</div>
+      </div>
+</section>
+
+<!-- IMPACTO -->
+<section id="impacto">
+  <div class="reveal">
+    <div class="section-label">Impacto</div>
+    <h2 class="section-title">Números que <em>fazem sentido</em></h2>
+  </div>
+  <div class="impacto-grid reveal">
+    <div class="impacto-block">
+      <div class="impacto-icon">🎉</div>
+      <div class="impacto-num"><span class="count" data-target="24">0</span><span class="impacto-plus">+</span></div>
+      <div class="impacto-lbl">Eventos realizados</div>
+    </div>
+    <div class="impacto-block">
+      <div class="impacto-icon">👥</div>
+      <div class="impacto-num"><span class="count" data-target="348">0</span><span class="impacto-plus">+</span></div>
+      <div class="impacto-lbl">Alunos representados</div>
+    </div>
+    <div class="impacto-block">
+      <div class="impacto-icon">📋</div>
+      <div class="impacto-num"><span class="count" data-target="48">0</span></div>
+      <div class="impacto-lbl">Pautas encaminhadas</div>
+    </div>
+    <div class="impacto-block">
+      <div class="impacto-icon">🏆</div>
+      <div class="impacto-num"><span class="count" data-target="12">0</span></div>
+      <div class="impacto-lbl">Projetos em andamento</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJETOS -->
+<section id="projetos">
+  <div class="reveal">
+    <div class="section-label">Iniciativas</div>
+    <h2 class="section-title">Projetos que <em>transformam</em> a escola</h2>
+  </div>
+  <div class="projetos-tabs reveal">
+    <button class="tab-btn active" data-cat="all">Todos</button>
+    <button class="tab-btn" data-cat="cultural">Cultural</button>
+    <button class="tab-btn" data-cat="esporte">Esporte</button>
+    <button class="tab-btn" data-cat="social">Social</button>
+    <button class="tab-btn" data-cat="edu">Educação</button>
+    <button class="tab-btn" data-cat="ambiental">Ambiental</button>
+  </div>
+  <div class="projetos-grid" id="projetosGrid">
+
+    <div class="projeto-card visible-card" data-cat="cultural">
+      <div class="p-top">
+        <div class="p-icon ic-cultural">🎭</div>
+        <span class="p-status st-ativo">● Em andamento</span>
+      </div>
+      <div class="p-category">Cultural</div>
+      <h3>Semana Cultural MHDC</h3>
+      <p>5 dias dedicados à arte, música, teatro, dança e expressão dos talentos dos alunos. Abertura para a comunidade com exposições e apresentações ao vivo.</p>
+      <div class="p-progress">
+        <div class="p-progress-bar"><div class="p-progress-fill" style="width:70%"></div></div>
+        <div class="p-progress-lbl"><span>Planejamento</span><span>70%</span></div>
+      </div>
+    </div>
+
+    <div class="projeto-card visible-card" data-cat="esporte">
+      <div class="p-top">
+        <div class="p-icon ic-esporte">🏃</div>
+        <span class="p-status st-proximo">● Próximo</span>
+      </div>
+      <div class="p-category">Esporte</div>
+      <h3>Olimpíadas Internas</h3>
+      <p>Torneio esportivo entre turmas com futsal, vôlei, basquete, xadrez e atletismo. Integração, saúde e espírito competitivo saudável para toda a escola.</p>
+      <div class="p-progress">
+        <div class="p-progress-bar"><div class="p-progress-fill" style="width:45%"></div></div>
+        <div class="p-progress-lbl"><span>Inscrições</span><span>45%</span></div>
+      </div>
+    </div>
+
+    <div class="projeto-card visible-card" data-cat="social">
+      <div class="p-top">
+        <div class="p-icon ic-social">🤝</div>
+        <span class="p-status st-plan">● Em planejamento</span>
+      </div>
+      <div class="p-category">Social</div>
+      <h3>Campanha Solidária</h3>
+      <p>Arrecadação de alimentos, agasalhos e material escolar para famílias em situação de vulnerabilidade da comunidade de Cubatão. Unidos pelo próximo.</p>
+      <div class="p-progress">
+        <div class="p-progress-bar"><div class="p-progress-fill" style="width:20%"></div></div>
+        <div class="p-progress-lbl"><span>Início</span><span>20%</span></div>
+      </div>
+    </div>
+
+    <div class="projeto-card visible-card" data-cat="edu">
+      <div class="p-top">
+        <div class="p-icon ic-edu">📚</div>
+        <span class="p-status st-ativo">● Em andamento</span>
+      </div>
+      <div class="p-category">Educação</div>
+      <h3>Monitoria Solidária</h3>
+      <p>Rede de monitoria entre alunos: estudantes avançados auxiliam colegas com dificuldades, criando uma cultura colaborativa de aprendizado e apoio mútuo.</p>
+      <div class="p-progress">
+        <div class="p-progress-bar"><div class="p-progress-fill" style="width:60%"></div></div>
+        <div class="p-progress-lbl"><span>Expansão</span><span>60%</span></div>
+      </div>
+    </div>
+
+    <div class="projeto-card visible-card" data-cat="ambiental">
+      <div class="p-top">
+        <div class="p-icon ic-ambiental">🌱</div>
+        <span class="p-status st-ativo">● Em andamento</span>
+      </div>
+      <div class="p-category">Ambiental</div>
+      <h3>Escola Verde</h3>
+      <p>Horta coletiva, coleta seletiva e conscientização ambiental. Transformamos espaços ociosos da escola em jardins de convivência e aprendizado sustentável.</p>
+      <div class="p-progress">
+        <div class="p-progress-bar"><div class="p-progress-fill" style="width:80%"></div></div>
+        <div class="p-progress-lbl"><span>Fase 2</span><span>80%</span></div>
+      </div>
+    </div>
+
+    <div class="projeto-card visible-card" data-cat="cultural">
+      <div class="p-top">
+        <div class="p-icon ic-cultural">🎤</div>
+        <span class="p-status st-ativo">● Em andamento</span>
+      </div>
+      <div class="p-category">Cultural</div>
+      <h3>Rádio Escola MHDC</h3>
+      <p>Programa de rádio produzido pelos alunos durante o intervalo. Notícias, músicas e informações sobre a escola — comunicação estudantil na prática.</p>
+      <div class="p-progress">
+        <div class="p-progress-bar"><div class="p-progress-fill" style="width:90%"></div></div>
+        <div class="p-progress-lbl"><span>Operando</span><span>90%</span></div>
+      </div>
+    </div>
+
+    <div class="projeto-card visible-card" data-cat="edu">
+      <div class="p-top">
+        <div class="p-icon ic-edu">💻</div>
+        <span class="p-status st-plan">● Em planejamento</span>
+      </div>
+      <div class="p-category">Educação</div>
+      <h3>Oficinas de Tecnologia</h3>
+      <p>Workshops de programação, design e mídias digitais para alunos de todos os anos. Preparando a comunidade escolar para o mundo digital.</p>
+      <div class="p-progress">
+        <div class="p-progress-bar"><div class="p-progress-fill" style="width:15%"></div></div>
+        <div class="p-progress-lbl"><span>Estruturação</span><span>15%</span></div>
+      </div>
+    </div>
+
+    <div class="projeto-card visible-card" data-cat="social">
+      <div class="p-top">
+        <div class="p-icon ic-social">🧠</div>
+        <span class="p-status st-ativo">● Em andamento</span>
+      </div>
+      <div class="p-category">Social</div>
+      <h3>Saúde Mental na Escola</h3>
+      <p>Rodas de conversa, palestras com psicólogos e materiais sobre bem-estar emocional. Porque a saúde mental dos estudantes também é pauta do grêmio.</p>
+      <div class="p-progress">
+        <div class="p-progress-bar"><div class="p-progress-fill" style="width:55%"></div></div>
+        <div class="p-progress-lbl"><span>Rodas ativas</span><span>55%</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- AGENDA -->
+<section id="agenda">
+  <div class="reveal">
+    <div class="section-label">Calendário</div>
+    <h2 class="section-title">Agenda de <em>eventos</em></h2>
+  </div>
+  <div class="agenda-wrap">
+    <div class="cal-box reveal">
+      <div class="cal-head">
+        <button class="cal-btn" id="calPrev">‹</button>
+        <h3 id="calTitle"></h3>
+        <button class="cal-btn" id="calNext">›</button>
+      </div>
+      <div class="cal-body">
+        <div class="cal-dow-row" id="calDow"></div>
+        <div class="cal-days" id="calDays"></div>
+      </div>
+    </div>
+    <div class="events-col reveal">
+      <div class="event-card">
+        <div class="ev-date"><div class="ev-day">16</div><div class="ev-month">Mai</div></div>
+        <div class="ev-info">
+          <h4>Reunião Aberta do Grêmio</h4>
+          <p>Todos os alunos são bem-vindos! Pautas, sugestões e votações. Sala 12, bloco B.</p>
+          <div class="ev-meta">
+            <span class="ev-tag et-reuniao">Reunião</span>
+            <span class="ev-time">🕐 12h00 – 13h00</span>
+          </div>
+        </div>
+      </div>
+      <div class="event-card">
+        <div class="ev-date"><div class="ev-day">22</div><div class="ev-month">Mai</div></div>
+        <div class="ev-info">
+          <h4>Abertura das Olimpíadas Internas</h4>
+          <p>Cerimônia de abertura na quadra poliesportiva. Desfile das equipes e sorteio de chaves.</p>
+          <div class="ev-meta">
+            <span class="ev-tag et-esporte">Esporte</span>
+            <span class="ev-time">🕐 14h00 – 16h00</span>
+          </div>
+        </div>
+      </div>
+      <div class="event-card">
+        <div class="ev-date"><div class="ev-day">06</div><div class="ev-month">Jun</div></div>
+        <div class="ev-info">
+          <h4>Semana Cultural MHDC</h4>
+          <p>Abertura com show de talentos no pátio principal. Entrada gratuita para a comunidade.</p>
+          <div class="ev-meta">
+            <span class="ev-tag et-cultural">Cultural</span>
+            <span class="ev-time">🕐 9h00 – 12h00</span>
+          </div>
+        </div>
+      </div>
+      <div class="event-card">
+        <div class="ev-date"><div class="ev-day">20</div><div class="ev-month">Jun</div></div>
+        <div class="ev-info">
+          <h4>Entrega — Campanha Solidária</h4>
+          <p>Doação dos itens arrecadados para famílias parceiras da comunidade de Cubatão.</p>
+          <div class="ev-meta">
+            <span class="ev-tag et-social">Social</span>
+            <span class="ev-time">🕐 10h00 – 12h00</span>
+          </div>
+        </div>
+      </div>
+      <div class="event-card">
+        <div class="ev-date"><div class="ev-day">05</div><div class="ev-month">Jul</div></div>
+        <div class="ev-info">
+          <h4>Workshop de Saúde Mental</h4>
+          <p>Palestra com psicólogo convidado sobre ansiedade, provas e bem-estar estudantil.</p>
+          <div class="ev-meta">
+            <span class="ev-tag et-social">Social</span>
+            <span class="ev-time">🕐 13h30 – 15h00</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MURAL -->
+<section id="mural">
+  <div class="reveal">
+    <div class="section-label">Notícias</div>
+    <h2 class="section-title">Mural do <em>Grêmio</em></h2>
+  </div>
+  <div class="mural-grid">
+    <div class="mural-card reveal">
+      <div class="mural-img">📣</div>
+      <div class="mural-body">
+        <div class="mural-tag">Comunicado</div>
+        <h3>Resultado da eleição para novos conselheiros</h3>
+        <p>Parabéns aos eleitos! A eleição contou com a maior participação da história do grêmio: 412 votos válidos.</p>
+        <div class="mural-meta"><span>15 de Abr · 2025</span><span>📖 3 min de leitura</span></div>
+      </div>
+    </div>
+    <div class="mural-card reveal">
+      <div class="mural-img">🌱</div>
+      <div class="mural-body">
+        <div class="mural-tag">Projeto Escola Verde</div>
+        <h3>Horta coletiva já produz seus primeiros alimentos</h3>
+        <p>A horta do pátio lateral colheu os primeiros legumes e está expandindo para uma segunda área da escola.</p>
+        <div class="mural-meta"><span>2 de Mai · 2025</span><span>📖 2 min de leitura</span></div>
+      </div>
+    </div>
+    <div class="mural-card reveal">
+      <div class="mural-img">🏆</div>
+      <div class="mural-body">
+        <div class="mural-tag">Esporte</div>
+        <h3>Inscrições abertas para as Olimpíadas Internas 2025</h3>
+        <p>Seis modalidades disponíveis. Formulário de inscrição disponível na secretaria e pelo Instagram do grêmio.</p>
+        <div class="mural-meta"><span>6 de Mai · 2025</span><span>📖 2 min de leitura</span></div>
+      </div>
+    </div>
+    <div class="mural-card reveal">
+      <div class="mural-img">🎤</div>
+      <div class="mural-body">
+        <div class="mural-tag">Rádio Escola</div>
+        <h3>Rádio MHDC completa 6 meses no ar com sucesso</h3>
+        <p>O programa já atingiu mais de 2.000 ouvintes no pátio e no refeitório. Novos formatos chegam em breve!</p>
+        <div class="mural-meta"><span>30 de Abr · 2025</span><span>📖 4 min de leitura</span></div>
+      </div>
+    </div>
+    <div class="mural-card reveal">
+      <div class="mural-img">🤝</div>
+      <div class="mural-body">
+        <div class="mural-tag">Social</div>
+        <h3>Reunião com a direção resulta em novas melhorias</h3>
+        <p>Após reunião com a gestão escolar, foram aprovadas: novos bebedouros, biblioteca ampliada e sala de estudo.</p>
+        <div class="mural-meta"><span>25 de Abr · 2025</span><span>📖 3 min de leitura</span></div>
+      </div>
+    </div>
+    <div class="mural-card reveal">
+      <div class="mural-img">🎨</div>
+      <div class="mural-body">
+        <div class="mural-tag">Cultural</div>
+        <h3>Semana Cultural: chamada de inscrições para artistas</h3>
+        <p>Alunos que queiram se apresentar na Semana Cultural podem se inscrever até o dia 25 de maio.</p>
+        <div class="mural-meta"><span>8 de Mai · 2025</span><span>📖 2 min de leitura</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DOCUMENTOS -->
+<section id="documentos">
+  <div class="reveal">
+    <div class="section-label">Transparência</div>
+    <h2 class="section-title">Documentos <em>oficiais</em></h2>
+  </div>
+  <div class="docs-grid">
+    <div class="doc-card reveal">
+      <div class="doc-icon">📋</div>
+      <div class="doc-info">
+        <h4>Estatuto do Grêmio</h4>
+        <p>Documento que rege o funcionamento, estrutura e valores do grêmio estudantil.</p>
+        <a href="#" class="doc-dl">📥 Baixar PDF</a>
+      </div>
+    </div>
+    <div class="doc-card reveal">
+      <div class="doc-icon">💰</div>
+      <div class="doc-info">
+        <h4>Prestação de Contas 2024</h4>
+        <p>Relatório financeiro completo das receitas e despesas do grêmio no ano de 2024.</p>
+        <a href="#" class="doc-dl">📥 Baixar PDF</a>
+      </div>
+    </div>
+    <div class="doc-card reveal">
+      <div class="doc-icon">📝</div>
+      <div class="doc-info">
+        <h4>Ata de Eleição — Nov/2023</h4>
+        <p>Registro oficial do processo eleitoral que elegeu a gestão 2024–2025.</p>
+        <a href="#" class="doc-dl">📥 Baixar PDF</a>
+      </div>
+    </div>
+    <div class="doc-card reveal">
+      <div class="doc-icon">📅</div>
+      <div class="doc-info">
+        <h4>Plano de Gestão 2024–2025</h4>
+        <p>Objetivos, metas e projetos previstos para o mandato atual da diretoria.</p>
+        <a href="#" class="doc-dl">📥 Baixar PDF</a>
+      </div>
+    </div>
+    <div class="doc-card reveal">
+      <div class="doc-icon">📣</div>
+      <div class="doc-info">
+        <h4>Regimento Interno</h4>
+        <p>Normas de funcionamento das reuniões, votações e deliberações do grêmio.</p>
+        <a href="#" class="doc-dl">📥 Baixar PDF</a>
+      </div>
+    </div>
+    <div class="doc-card reveal">
+      <div class="doc-icon">⚖️</div>
+      <div class="doc-info">
+        <h4>Lei 7.398/85 — Lei dos Grêmios</h4>
+        <p>A lei federal que garante o direito dos alunos de se organizar em grêmios estudantis.</p>
+        <a href="#" class="doc-dl">📥 Baixar PDF</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="reveal" style="text-align:center; max-width:600px; margin:0 auto;">
+    <div class="section-label">Dúvidas</div>
+    <h2 class="section-title">Perguntas <em>frequentes</em></h2>
+  </div>
+  <div class="faq-wrap reveal">
+    <div class="faq-item">
+      <button class="faq-q">Como posso participar do Grêmio? <span class="faq-arrow">▾</span></button>
+      <div class="faq-a">Qualquer aluno matriculado na escola pode participar das reuniões abertas, integrar comissões de projetos ou candidatar-se nas próximas eleições. Siga nosso Instagram ou venha pessoalmente nas reuniões toda sexta-feira no horário do almoço.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">Quando são as reuniões do Grêmio? <span class="faq-arrow">▾</span></button>
+      <div class="faq-a">As reuniões ordinárias acontecem toda sexta-feira das 12h às 13h na Sala 12 (Bloco B). Reuniões extraordinárias são convocadas conforme necessidade e divulgadas com antecedência pelo Instagram e nas salas de aula.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">Como posso sugerir um projeto ou pauta? <span class="faq-arrow">▾</span></button>
+      <div class="faq-a">Você pode enviar sua sugestão pelo formulário de contato neste site, pelo direct do Instagram, pessoalmente com qualquer diretor ou através das caixas de sugestão instaladas nos corredores do colégio. Todas as sugestões são lidas e discutidas nas reuniões.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">O Grêmio tem dinheiro? Como é gerenciado? <span class="faq-arrow">▾</span></button>
+      <div class="faq-a">Sim. O grêmio tem receitas provenientes de eventos, rifas e contribuições voluntárias. Todo recurso é gerenciado pelo Diretor Financeiro com supervisão de toda a diretoria, e as contas são publicadas trimestralmente na seção de Documentos deste site.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">Quando será a próxima eleição? <span class="faq-arrow">▾</span></button>
+      <div class="faq-a">As eleições para nova gestão estão previstas para novembro de 2025. O processo inclui registro de chapas, campanha e votação presencial. Fique atento aos comunicados para saber como se candidatar ou votar.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">O Grêmio pode ajudar com problemas dentro da escola? <span class="faq-arrow">▾</span></button>
+      <div class="faq-a">Sim! O grêmio atua como mediador entre estudantes e a gestão escolar. Se você presenciar ou sofrer alguma situação de bullying, injustiça ou problema estrutural, pode relatar ao grêmio com sigilo. Encaminharemos ao setor responsável formalmente.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section id="contato">
+  <div class="reveal" style="text-align:center; max-width:580px; margin: 0 auto 48px;">
+    <div class="section-label">Fale conosco</div>
+    <h2 class="section-title">Entre em <em>contato</em></h2>
+    <p style="color:var(--muted);font-size:.9rem;line-height:1.8;margin-top:14px;">Tem uma ideia, dúvida, sugestão ou quer participar? Nossa porta está sempre aberta.</p>
+  </div>
+  <div class="contato-wrap">
+    <div class="contato-left reveal">
+      <div class="channels">
+        <div class="ch"><div class="ch-ic">📍</div><div class="ch-text"><strong>Endereço</strong><span>E.E. Maria Helena Duarte Caetano — Cubatão, SP</span></div></div>
+        <div class="ch"><div class="ch-ic">📸</div><div class="ch-text"><strong>Instagram</strong><span>@gremio.mhdc</span></div></div>
+        <div class="ch"><div class="ch-ic">✉️</div><div class="ch-text"><strong>E-mail</strong><span>gremio.mhdc@escola.edu.br</span></div></div>
+        <div class="ch"><div class="ch-ic">🕐</div><div class="ch-text"><strong>Atendimento presencial</strong><span>Segunda a Sexta · 11h30 – 12h30</span></div></div>
+        <div class="ch"><div class="ch-ic">📅</div><div class="ch-text"><strong>Reuniões abertas</strong><span>Toda Sexta · 12h00 · Sala 12 – Bloco B</span></div></div>
+      </div>
+    </div>
+    <div class="contact-form reveal">
+      <h3>Envie uma mensagem</h3>
+      <div id="formFields">
+        <div class="form-2col">
+          <div class="form-row"><label>Seu nome</label><input type="text" id="fNome" placeholder="Nome completo"></div>
+          <div class="form-row"><label>Turma / Período</label>
+            <select id="fTurma">
+              <option value="">Selecione…</option>
+              <option>7º Ano</option><option>1º Ano </option>
+              <option>8º Ano</option><option>2º Ano </option>
+              <option>9º Ano</option><option>3º Ano </option>
+              <option>Professor / Funcionário</option><option>Responsável</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row"><label>Assunto</label>
+          <select id="fAssunto">
+            <option value="">Selecione o assunto…</option>
+            <option>Sugestão de projeto</option><option>Reclamação / problema</option>
+            <option>Quero participar do grêmio</option><option>Dúvida geral</option>
+            <option>Parceria / colaboração</option><option>Outro</option>
+          </select>
+        </div>
+        <div class="form-row"><label>Mensagem</label><textarea id="fMsg" placeholder="Escreva sua mensagem aqui…"></textarea></div>
+        <div class="form-row" style="display:flex;align-items:center;gap:10px;">
+          <input type="checkbox" id="fAnon" style="width:auto;"> 
+          <label for="fAnon" style="text-transform:none;letter-spacing:0;color:var(--muted);font-size:.82rem;cursor:pointer;">Quero manter minha identidade anônima</label>
+        </div>
+        <button class="btn-send" onclick="sendForm()">✉️ Enviar Mensagem</button>
+      </div>
+      <div class="form-success-msg" id="formSuccess">
+        <div class="check">✅</div>
+        <h4>Mensagem enviada com sucesso!</h4>
+        <p>Em breve nossa diretoria entrará em contato com você.<br>Obrigado por participar!</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="#" class="nav-brand" style="text-decoration:none;">
+        <div class="brand-logo">G</div>
+        <div class="brand-text">
+          <strong>Grêmio Estudantil</strong>
+          <small>E.E. Maria Helena Duarte Caetano</small>
+        </div>
+      </a>
+      <p>Representando os estudantes com transparência, democracia e dedicação desde 2022. Gestão 2024–2025.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Navegação</h5>
+      <ul>
+        <li><a href="#sobre">Sobre o Grêmio</a></li>
+        <li><a href="#gestao">Nossa Gestão</a></li>
+        <li><a href="#projetos">Projetos</a></li>
+        <li><a href="#agenda">Agenda</a></li>
+        <li><a href="#mural">Mural de Notícias</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Institucional</h5>
+      <ul>
+        <li><a href="#documentos">Documentos Oficiais</a></li>
+        <li><a href="#faq">Perguntas Frequentes</a></li>
+        <li><a href="#contato">Fale Conosco</a></li>
+        <li><a href="#">Política de Privacidade</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Contato</h5>
+      <ul>
+        <li><a href="#">📍 Cubatão, SP</a></li>
+        <li><a href="#">📸 @marial_gremio</a></li>
+        <li><a href="#">✉️ gremio.mhdc@escola.edu.br</a></li>
+        <li><a href="#">🕐 Seg–Sex · 11h30–12h30</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Grêmio Estudantil MHDC · Gestão 2025–2026</p>
+    <div class="social-links">
+      <a href="#" class="soc-btn">📸</a>
+      <a href="#" class="soc-btn">💬</a>
+      <a href="#" class="soc-btn">📧</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ───── STARS CANVAS ───── */
+(function(){
+  const c = document.getElementById('stars-canvas');
+  const ctx = c.getContext('2d');
+  let W, H, stars = [];
+  function resize(){ W = c.width = innerWidth; H = c.height = innerHeight; }
+  function mkStars(){
+    stars = [];
+    for(let i=0;i<180;i++) stars.push({
+      x: Math.random()*W, y: Math.random()*H,
+      r: Math.random()*.9+.2,
+      o: Math.random()*.8+.2,
+      s: Math.random()*.4+.1
+    });
+  }
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    stars.forEach(s=>{
+      s.o += s.s * .01;
+      if(s.o>1||s.o<.1) s.s*=-1;
+      ctx.beginPath();
+      ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(168,212,255,${s.o})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  resize(); mkStars(); draw();
+  window.addEventListener('resize',()=>{resize();mkStars();});
+})();
+
+/* ───── NAV ───── */
+window.addEventListener('scroll',()=>{
+  document.getElementById('navbar').classList.toggle('scrolled',scrollY>40);
+  const sections=[...document.querySelectorAll('section[id]')];
+  const links=[...document.querySelectorAll('.nav-links a')];
+  let cur='';
+  sections.forEach(s=>{ if(scrollY>=s.offsetTop-90) cur=s.id; });
+  links.forEach(a=>{ a.classList.toggle('active', a.getAttribute('href')==='#'+cur); });
+});
+
+function toggleMobile(){ document.getElementById('mobileMenu').classList.toggle('open'); }
+
+/* ───── MARQUEE ───── */
+const items=['Democracia','Participação','Inclusão','Cultura','Esporte','Transparência','Representatividade','União Estudantil'];
+const inner = document.getElementById('marqueeInner');
+const markup = items.map(t=>`<span class="marquee-item">${t}</span><span class="marquee-sep">✦</span>`).join('');
+inner.innerHTML = markup+markup;
+
+/* ───── SCROLL REVEAL ───── */
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target); }});
+},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+/* ───── COUNT UP ───── */
+const countObserver = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting) return;
+    e.target.querySelectorAll('.count').forEach(c=>{
+      const target=+c.dataset.target, dur=1800;
+      let start=null;
+      function step(ts){ if(!start)start=ts; const p=Math.min((ts-start)/dur,1); c.textContent=Math.floor(p*target); if(p<1)requestAnimationFrame(step); }
+      requestAnimationFrame(step);
+    });
+    countObserver.unobserve(e.target);
+  });
+},{threshold:.3});
+document.querySelectorAll('#impacto').forEach(el=>countObserver.observe(el));
+
+/* ───── PROJETOS TABS ───── */
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const cat=btn.dataset.cat;
+    document.querySelectorAll('.projeto-card').forEach(card=>{
+      const show = cat==='all' || card.dataset.cat===cat;
+      card.classList.toggle('visible-card',show);
+    });
+  });
+});
+
+/* ───── CALENDAR ───── */
+const MONTHS=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+const DOWS=['D','S','T','Q','Q','S','S'];
+const EVENT_DAYS={'2026-5-16':1,'2026-5-22':1,'2026-6-6':1,'2026-6-20':1,'2026-7-5':1};
+let cY=new Date().getFullYear(), cM=new Date().getMonth();
+function buildCal(){
+  document.getElementById('calTitle').textContent=MONTHS[cM]+' '+cY;
+  const dow=document.getElementById('calDow');
+  dow.innerHTML=DOWS.map(d=>`<div class="cal-dow">${d}</div>`).join('');
+  const days=document.getElementById('calDays');
+  days.innerHTML='';
+  const first=new Date(cY,cM,1).getDay();
+  const dim=new Date(cY,cM+1,0).getDate();
+  const prev=new Date(cY,cM,0).getDate();
+  const today=new Date();
+  for(let i=0;i<first;i++) days.innerHTML+=`<div class="cal-d other">${prev-first+1+i}</div>`;
+  for(let d=1;d<=dim;d++){
+    const key=`${cY}-${cM+1}-${d}`;
+    const isT=d===today.getDate()&&cM===today.getMonth()&&cY===today.getFullYear();
+    days.innerHTML+=`<div class="cal-d${isT?' today':''}${EVENT_DAYS[key]?' has-ev':''}">${d}</div>`;
+  }
+  const rem=42-first-dim;
+  for(let i=1;i<=rem;i++) days.innerHTML+=`<div class="cal-d other">${i}</div>`;
+}
+document.getElementById('calPrev').onclick=()=>{ cM--; if(cM<0){cM=11;cY--;} buildCal(); };
+document.getElementById('calNext').onclick=()=>{ cM++; if(cM>11){cM=0;cY++;} buildCal(); };
+buildCal();
+
+/* ───── FAQ ───── */
+document.querySelectorAll('.faq-q').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const item=btn.parentElement;
+    const open=item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+    if(!open) item.classList.add('open');
+  });
+});
+
+/* ───── FORM ───── */
+function sendForm(){
+  const nome=document.getElementById('fNome').value.trim();
+  const msg=document.getElementById('fMsg').value.trim();
+  if(!nome||!msg){ alert('Por favor preencha ao menos seu nome e a mensagem.'); return; }
+  document.getElementById('formFields').style.display='none';
+  document.getElementById('formSuccess').style.display='block';
+}
+</script>
+</body>
+</html>
