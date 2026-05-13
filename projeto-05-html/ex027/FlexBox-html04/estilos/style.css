@@ -1,0 +1,102 @@
+@charset "UTF-8";
+
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+
+body {
+    background-color: rgb(172, 224, 172);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+header {
+    background-color: rgb(5, 105, 5);
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+header > p {
+    margin-top: 10px;
+}
+
+nav {
+    background-color: green;
+    text-align: center;
+    padding: 10px;
+}
+
+nav > a {
+    font-weight: bold;
+    text-decoration: none;
+    margin: 10px;
+    color: white;
+}
+
+nav > a:hover {
+    background-color: rgb(3, 172, 3);
+    padding: 10px;
+    transition: 0.5s;
+    border-radius: 10px;
+}
+
+main {
+    max-width: 900px;
+    margin: 30px auto;
+    border: 1px solid black;
+    border-radius: 10px;
+    flex: auto;
+    background-color: white;
+}
+
+
+main > h2 {
+    color: green;
+    padding: 10px;
+}
+
+main > p {
+    font-weight: bold;
+    line-height: 1.5em;
+    padding: 10px;
+}
+
+main > img {
+    width: 100%;
+    max-width: 900px;
+    display: block;
+    margin: auto;
+}
+
+main > section {
+    border-radius: 10px;
+    margin: 20px;
+    background-color: rgba(163, 244, 194, 0.753);
+    border: 2px solid black;
+}
+
+main section > h2 {
+    color: black;
+    padding: 10px;
+}
+
+main section > ul {
+    font-weight: bold;
+    padding-left: 20px;
+    list-style-position: inside;
+}
+
+main section > p {
+    font-weight: bold;
+    padding: 20px;
+}
+
+footer {
+    background-color: rgb(3, 93, 3);
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+    color: white;
+}
